@@ -1,5 +1,6 @@
 package org.peppermint.ChatApp.service;
 
+import org.peppermint.ChatApp.dto.UserDTO;
 import org.peppermint.ChatApp.model.ChatRoom;
 import org.peppermint.ChatApp.model.User;
 
