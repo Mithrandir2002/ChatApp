@@ -3,6 +3,7 @@ package org.peppermint.ChatApp.service.serviceimpl;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.peppermint.ChatApp.dto.UserDTO;
 import org.peppermint.ChatApp.exception.EntityNotFoundException;
 import org.peppermint.ChatApp.exception.UserExistedException;
 import org.peppermint.ChatApp.model.ChatRoom;
@@ -13,7 +14,7 @@ import org.peppermint.ChatApp.repository.MemberRepository;
 import org.peppermint.ChatApp.repository.UserRepository;
 import org.peppermint.ChatApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,16 +24,18 @@ import java.util.Optional;
 @NoArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
+    @Autowired
     UserRepository userRepository;
     MemberRepository memberRepository;
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+//    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public User registerUser(User user) {
-        if(userRepository.findUserByEmail(user.getEmail()).isPresent()) throw new UserExistedException("Email " + user.getEmail() + " is already existed in our record");
+        if(userRepository.findUserByEmail(user.getEmail()).isPresent()) throw new UserExistedException("Email " + user.getEmail() + " is already exist in our record");
+        if(userRepository.findUserByUsername(user.getUsername()).isPresent()) throw new UserExistedException("Username " + user.getUsername() + " is already existe in our record");
         User savedUser = User.builder()
                 .email(user.getEmail())
-                .password(bCryptPasswordEncoder.encode(user.getPassword()))
+                .password(user.getPassword())
                 .username(user.getUsername())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
