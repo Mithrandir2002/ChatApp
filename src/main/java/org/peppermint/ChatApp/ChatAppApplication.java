@@ -3,7 +3,7 @@ package org.peppermint.ChatApp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class ChatAppApplication {
@@ -12,8 +12,8 @@ public class ChatAppApplication {
 		SpringApplication.run(ChatAppApplication.class, args);
 	}
 
-	@Bean
-	BCryptPasswordEncoder encoder() {
-		return new BCryptPasswordEncoder();
-	}
+//	@Bean
+//	BCryptPasswordEncoder encoder() {
+//		return new BCryptPasswordEncoder();
+//	}
 }
