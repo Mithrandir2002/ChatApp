@@ -14,20 +14,20 @@ import org.peppermint.ChatApp.repository.MemberRepository;
 import org.peppermint.ChatApp.repository.UserRepository;
 import org.peppermint.ChatApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
     MemberRepository memberRepository;
-//    BCryptPasswordEncoder bCryptPasswordEncoder;
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public User registerUser(User user) {
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
         if(userRepository.findUserByUsername(user.getUsername()).isPresent()) throw new UserExistedException("Username " + user.getUsername() + " is already existe in our record");
         User savedUser = User.builder()
                 .email(user.getEmail())
-                .password(user.getPassword())
+                .password(bCryptPasswordEncoder.encode(user.getPassword()))
                 .username(user.getUsername())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
@@ -48,6 +48,11 @@ public class UserServiceImpl implements UserService {
         Optional<User> opUser = userRepository.findById(id);
         if (opUser.isPresent()) return opUser.get();
         else throw new EntityNotFoundException(id, User.class);
+    }
+
+    @Override
+    public User findUserByUsername(String username) {
+        return userRepository.findUserByUsername(username).orElseThrow(() -> new RuntimeException());
     }
 
     @Override
