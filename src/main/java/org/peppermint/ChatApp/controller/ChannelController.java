@@ -3,7 +3,9 @@ package org.peppermint.ChatApp.controller;
 import lombok.AllArgsConstructor;
 import org.peppermint.ChatApp.dto.ChannelDTO;
 import org.peppermint.ChatApp.model.Channel;
+import org.peppermint.ChatApp.model.User;
 import org.peppermint.ChatApp.service.ChannelService;
+import org.peppermint.ChatApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +16,13 @@ import org.springframework.web.bind.annotation.*;
 public class ChannelController {
     @Autowired
     public ChannelService channelService;
+    public UserService userService;
 
-    @PostMapping("/api/room/{roomCode}/{userId}")
-    public ResponseEntity<ChannelDTO> createChannel(@RequestBody Channel channel, @PathVariable String roomCode, @PathVariable String userId) {
-        return new ResponseEntity<>(mapToChannelDTO(channelService.createChannel(channel, roomCode, userId)), HttpStatus.CREATED);
+    @PostMapping("/api/room/{roomCode}")
+    public ResponseEntity<ChannelDTO> createChannel(@RequestHeader("Authorization") String token, @RequestBody Channel channel, @PathVariable String roomCode) {
+        token = token.replace("Bearer ", "");
+        User user = userService.findUserByToken(token);
+        return new ResponseEntity<>(mapToChannelDTO(channelService.createChannel(channel, roomCode, user.getId())), HttpStatus.CREATED);
     }
 
     public ChannelDTO mapToChannelDTO(Channel channel) {
