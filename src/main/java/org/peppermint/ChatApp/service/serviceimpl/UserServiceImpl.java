@@ -1,8 +1,12 @@
 package org.peppermint.ChatApp.service.serviceimpl;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.peppermint.ChatApp.configuration.securityconfig.SecurityConstants;
 import org.peppermint.ChatApp.dto.UserDTO;
 import org.peppermint.ChatApp.exception.EntityNotFoundException;
 import org.peppermint.ChatApp.exception.UserExistedException;
@@ -106,5 +110,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User changeDob(String dob) {
         return null;
+    }
+
+    @Override
+    public User findUserByToken(String token) {
+        DecodedJWT jwt = JWT.require(Algorithm.HMAC512(SecurityConstants.SECRET_KEY)).build().verify(token);
+        String username = jwt.getSubject();
+        return findUserByUsername(username);
     }
 }

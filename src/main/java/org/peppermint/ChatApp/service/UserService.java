@@ -14,4 +14,5 @@ public interface UserService {
     User changePassword(String password);
     User changeUsername(String username);
     User changeDob(String dob);
+    User findUserByToken(String token);
 }
