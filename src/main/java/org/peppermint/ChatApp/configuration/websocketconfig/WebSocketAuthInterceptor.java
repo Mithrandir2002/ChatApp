@@ -32,7 +32,7 @@ public class WebSocketAuthInterceptor implements HandshakeInterceptor {
 
             try {
                 DecodedJWT jwt = JWT.require(Algorithm.HMAC512(SecurityConstants.SECRET_KEY)).build().verify(token);
-                attributes.put("user", token);
+                attributes.put("username", jwt.getSubject());
                 return true;
             } catch (JWTVerificationException e) {
                 response.setStatusCode(HttpStatus.UNAUTHORIZED);
