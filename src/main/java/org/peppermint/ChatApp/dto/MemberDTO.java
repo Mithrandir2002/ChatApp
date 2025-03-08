@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class MemberDTO {
     private String role;
-    private UserDTO userDto;
+    private String username;
 }
