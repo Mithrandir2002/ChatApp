@@ -34,9 +34,8 @@ public class ChannelServiceImpl implements ChannelService {
     }
 
     @Override
-    public Channel getChannel(String channelId, String userId) {
+    public Channel getChannel(String channelId) {
         Channel channel = channelRepository.findById(channelId).orElseThrow(() -> new RuntimeException());
-        Member member = memberService.getMember(channel.getRoom().getRoomCode(), userId);
         return channel;
     }
 
