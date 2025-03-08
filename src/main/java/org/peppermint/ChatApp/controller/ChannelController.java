@@ -25,6 +25,14 @@ public class ChannelController {
         return new ResponseEntity<>(mapToChannelDTO(channelService.createChannel(channel, roomCode, user.getId())), HttpStatus.CREATED);
     }
 
+    @GetMapping("/api/channel/{channelId}")
+    public ResponseEntity<ChannelDTO> getChannel(@RequestHeader("Authorization") String token, @PathVariable String channelId) {
+        token = token.replace("Bearer ", "");
+        User user = userService.findUserByToken(token);
+        return new ResponseEntity<>(mapToChannelDTO(channelService.getChannel(channelId)), HttpStatus.OK);
+    }
+    
+
     public ChannelDTO mapToChannelDTO(Channel channel) {
         return ChannelDTO.builder()
                 .name(channel.getName())
