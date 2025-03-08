@@ -22,6 +22,9 @@ public class Member {
     @Column(nullable = false)
     private String role;
 
+    @Column(nullable = false)
+    private String username;
+
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     private List<Message> messages = new ArrayList<>();
 
