@@ -18,10 +18,10 @@ public interface MemberRepository extends JpaRepository<Member, MemberId> {
     Optional<Member> findByUserAndRoom(@Param("user") User user, @Param("room") ChatRoom room);
 
     @Query("select m from Member m where m.user = :user")
-    List<Member> findMemberByUser(@Param("user") User user);
+    List<Member> findMembersByUser(@Param("user") User user);
 
     @Query("select m from Member m where m.room = :room")
-    List<Member> findMemberByRoom(@Param("room") ChatRoom chatRoom);
+    List<Member> findMembersByRoom(@Param("room") ChatRoom chatRoom);
 
     @Query("delete from Member m where m.user = :user")
     void deleteByUser(@Param("user") User user);
