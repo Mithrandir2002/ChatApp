@@ -38,6 +38,7 @@ public class MemberServiceImpl implements MemberService {
             return null;
         } else {
             Member member = Member.builder()
+                    .username(user.getUsername())
                     .user(user)
                     .room(room)
                     .role(role)
@@ -89,7 +90,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public List<Member> getMembersFromChatRoom(String roomCode) {
         ChatRoom room = roomService.getChatRoom(roomCode);
-        List<Member> members = memberRepository.findMemberByRoom(room);
+        List<Member> members = memberRepository.findMembersByRoom(room);
         return members;
     }
 }

@@ -1,5 +1,6 @@
 package org.peppermint.ChatApp.service;
 
+import org.peppermint.ChatApp.model.Channel;
 import org.peppermint.ChatApp.model.ChatRoom;
 import org.peppermint.ChatApp.model.Member;
 
@@ -10,4 +11,5 @@ public interface ChatRoomService {
     ChatRoom getChatRoom(String roomcode);
     ChatRoom updateChatRoom(ChatRoom room);
     void deleteChatRoom(String id);
+    ChatRoom findRoomByChannel(Channel channel);
 }

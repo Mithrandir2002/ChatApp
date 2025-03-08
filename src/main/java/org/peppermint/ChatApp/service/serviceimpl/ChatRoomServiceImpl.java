@@ -3,6 +3,7 @@ package org.peppermint.ChatApp.service.serviceimpl;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.peppermint.ChatApp.exception.EntityNotFoundException;
+import org.peppermint.ChatApp.model.Channel;
 import org.peppermint.ChatApp.model.ChatRoom;
 import org.peppermint.ChatApp.model.Member;
 import org.peppermint.ChatApp.model.User;
@@ -49,6 +50,11 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     @Override
     public void deleteChatRoom(String id) {
 
+    }
+
+    @Override
+    public ChatRoom findRoomByChannel(Channel channel) {
+        return chatRoomRepository.findByChannel(channel).orElseThrow(() -> new RuntimeException());
     }
 
     private String generateRoomCode() {

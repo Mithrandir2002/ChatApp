@@ -34,8 +34,7 @@ public class ChannelServiceImpl implements ChannelService {
     }
 
     @Override
-    public Channel getChannel(String channelId) {
-        Channel channel = channelRepository.findById(channelId).orElseThrow(() -> new RuntimeException());
+    public Channel getChannel(String channelId) {Channel channel = channelRepository.findById(channelId).orElseThrow(() -> new RuntimeException());
         return channel;
     }
 
